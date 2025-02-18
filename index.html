@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>One Year Anniversary</title>
+  <style>
+@import url("https://fonts.googleapis.com/css2?family=Caveat");
+
+.Container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.Background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.Picture, .Picture-video {
+  position: absolute;
+  border: 5px solid #fff;
+  border-radius: 3px;
+  background: #797979;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
+  user-select: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.Picture-video {
+  background: #fff;
+}
+
+.Picture-img {
+  display: block;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+}
+
+.Picture-note, .Picture-note-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 70px;
+  padding: 12px 24px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.Network img, .Network-video img {
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  vertical-align: middle;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Caveat', serif;
+  background-color: rgb(38, 38, 38);
+}
+  </style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video class="Background-video" autoplay loop muted>
+    <source src="mmmanchalooo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="Container">
+    <!-- last card -->
+    <div class="Picture-video" id="video">
+      <img class="Picture-img" src="manoj - Copy.jpg" alt="" />
+      <div class="Picture-note"><span>Happy one year anniversary mmmmmanchaloooo🥺💝</span></div>
+    </div>
+    
+    <div class="Picture">
+      <img class="Picture-img" src="m2.jpg" alt="" />
+      <div class="Picture-note"><span>Nnnaa worlduu🥹🌍</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="m3.jpg" alt="" />
+      <div class="Picture-note"><span>Nnnaa Kohinooruuu💕</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="m4.jpg" alt="" />
+      <div class="Picture-note"><span>Nnnaa kukkaloo💖</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="m5.jpg" alt="" />
+      <div class="Picture-note"><span>Nnnaa Buzzzulooo❤️</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="m8.jpg" alt="" />
+      <div class="Picture-note"><span>My Kadhaaluuu💕</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="m1.jpg" alt="" />
+      <div class="Picture-note"><span>My mohabaat💘</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="m6.jpg" alt="" />
+      <div class="Picture-note"><span>My ishquuu💖</span></div>
+    </div>
+    <div class="Picture">
+      <img class="Picture-img" src="m10.jpg" alt="" />
+      <div class="Picture-note"><span> My pyaariii💕</span></div>
+    </div>
+  </div>
+<script>
+  const pictures = document.querySelectorAll('.Picture, .Picture-video');
+  let previousTouch = undefined;
+  let offsetX = 0;
+  let offsetY = 0;
+  
+  function updateElementPosition(element, event) {
+    let clientX, clientY;
+  
+    if (event.type === 'touchmove') {
+      const touch = event.touches[0];
+      clientX = touch.clientX;
+      clientY = touch.clientY;
+    } else {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    }
+  
+    // Update element position with the calculated offsets
+    const elementX = clientX - offsetX;
+    const elementY = clientY - offsetY;
+  
+    element.style.top = elementY + "px";
+    element.style.left = elementX + "px";
+  }
+  
+  function startDrag(element, event) {
+    let clientX, clientY;
+  
+    if (event.type === 'touchstart') {
+      const touch = event.touches[0];
+      clientX = touch.clientX;
+      clientY = touch.clientY;
+    } else {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    }
+  
+    // Calculate the offset between the cursor and the element's top-left corner
+    const rect = element.getBoundingClientRect();
+    offsetX = clientX - rect.left;
+    offsetY = clientY - rect.top;
+  
+    const updateFunction = event => updateElementPosition(element, event);
+    const stopFunction = () => stopDrag({ update: updateFunction, stop: stopFunction });
+  
+    document.addEventListener("mousemove", updateFunction);
+    document.addEventListener("touchmove", updateFunction);
+    document.addEventListener("mouseup", stopFunction);
+    document.addEventListener("touchend", stopFunction);
+  }
+  
+  function stopDrag(functions) {
+    previousTouch = undefined;
+    document.removeEventListener("mousemove", functions.update);
+    document.removeEventListener("touchmove", functions.update);
+    document.removeEventListener("mouseup", functions.stop);
+    document.removeEventListener("touchend", functions.stop);
+  }
+  
+  // Initial setup to center pictures with random slight rotation
+  pictures.forEach(picture => {
+    const range = 20; // Reduced range for less extreme initial positioning
+    const randomX = Math.random() * (range * 2) - range;
+    const randomY = Math.random() * (range * 2) - range;
+    const randomRotate = Math.random() * (range / 2) - range / 4;
+  
+    const startFunction = event => startDrag(picture, event);
+  
+    // Center the picture initially
+    picture.style.top = `50%`;
+    picture.style.left = `50%`;
+    picture.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg)`;
+  
+    picture.addEventListener("mousedown", startFunction);
+    picture.addEventListener("touchstart", startFunction);
+  });
+  </script>  
+</body>
+</html>
